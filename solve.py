@@ -38,9 +38,12 @@ def main():
 	for j in xrange(SIZE):
 		run_elimination(i, j)
 
+	# keep looping through pieces and eliminating orientations
 	while len(notDone) > 0:
 		run_elimination(notDone[0][0], notDone[0][1])
 
+
+	# print out final orientations
 	print 'Final Orientations:'
 	for i in xrange(SIZE):
 		s = ''
@@ -56,6 +59,7 @@ def run_elimination(i, j):
 	if piece.done:
 		return
 
+	# get all neighbors for this piece
 	left = get_left_piece(i, j)
 	right = get_right_piece(i ,j)
 	up = get_above_piece(i, j)
@@ -98,6 +102,9 @@ def run_elimination(i, j):
 		piece.orientation = piece.possibleOrientations[0]
 		piece.done = True
 		print '\tSet orientation for piece ' + str(i) + str(j) + ' to ' + piece.orientation.get_name()
+	elif len(piece.possibleOrientations) == 0:
+		print 'ERROR: Seems like this board has no solution. Exiting...'
+		exit()
 	else:
 		notDone.append((i,j)) # place piece at end of stack
 
