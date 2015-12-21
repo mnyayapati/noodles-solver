@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 class Orientation(object):
 	def __init__(self, *args):
 		self.directions = []
@@ -13,9 +11,7 @@ class Orientation(object):
 		return direction in self.directions
 
 class Direction(object):
-	@abstractmethod
-	def get_name(self):
-		pass
+	pass
 
 class Left(Direction):
 	def get_name(self):

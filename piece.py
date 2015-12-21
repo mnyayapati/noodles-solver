@@ -32,11 +32,11 @@ class Piece(object):
 		self.eliminate_not_direction(down)
 
 	def eliminate_direction(self, direction):
-		self.possibleOrientations = [p for p in self.possibleOrientations 
+		self.possible_orientations = [p for p in self.possible_orientations 
 										if not p.contains_direction(direction)]
 
 	def eliminate_not_direction(self, direction):
-		self.possibleOrientations = [p for p in self.possibleOrientations
+		self.possible_orientations = [p for p in self.possible_orientations
 										if p.contains_direction(direction)]
 
 	def contains_left(self):
@@ -61,42 +61,42 @@ class Piece(object):
 
 class CornerPiece(Piece):
 	def __init__(self):
-		self.possibleOrientations = []
+		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possibleOrientations.append(Orientation(down, right))
-		self.possibleOrientations.append(Orientation(down, left))
-		self.possibleOrientations.append(Orientation(up, right))
-		self.possibleOrientations.append(Orientation(up, left))
+		self.possible_orientations.append(Orientation(down, right))
+		self.possible_orientations.append(Orientation(down, left))
+		self.possible_orientations.append(Orientation(up, right))
+		self.possible_orientations.append(Orientation(up, left))
 
 
 class LongPiece(Piece):
 	def __init__(self):
-		self.possibleOrientations = []
+		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possibleOrientations.append(Orientation(up, down))
-		self.possibleOrientations.append(Orientation(left, right))
+		self.possible_orientations.append(Orientation(up, down))
+		self.possible_orientations.append(Orientation(left, right))
 
 
 class EndPiece(Piece):
 	def __init__(self):
-		self.possibleOrientations = []
+		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possibleOrientations.append(Orientation(up))
-		self.possibleOrientations.append(Orientation(down))
-		self.possibleOrientations.append(Orientation(left))
-		self.possibleOrientations.append(Orientation(right))
+		self.possible_orientations.append(Orientation(up))
+		self.possible_orientations.append(Orientation(down))
+		self.possible_orientations.append(Orientation(left))
+		self.possible_orientations.append(Orientation(right))
 
 
 class ProngPiece(Piece):
 	def __init__(self):
-		self.possibleOrientations = []
+		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possibleOrientations.append(Orientation(left, up, right))
-		self.possibleOrientations.append(Orientation(up, right, down))
-		self.possibleOrientations.append(Orientation(right, down, left))
-		self.possibleOrientations.append(Orientation(down, left, up))
+		self.possible_orientations.append(Orientation(left, up, right))
+		self.possible_orientations.append(Orientation(up, right, down))
+		self.possible_orientations.append(Orientation(right, down, left))
+		self.possible_orientations.append(Orientation(down, left, up))
 
