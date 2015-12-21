@@ -1,15 +1,21 @@
 from piece import *
 import sys
 
-SIZE = 0
+NUMROWS = 0
+NUMCOLS = 0
 notDone = []
 board = []
 
 def main():
 	print '\n~~~~~~~~~~~~~~~~~ NOODLES GAME SOLVER ~~~~~~~~~~~~~~~~~'
-	global SIZE
-	SIZE = input('Enter board size: ')
-	print 'Board size : ' + str(SIZE) + 'x' + str(SIZE)
+	dimensions = raw_input('Enter board dimensions ([rows] [cols]): ')
+	dimensions = dimensions.split()
+	global NUMROWS
+	global NUMCOLS
+	NUMROWS = int(dimensions[0])
+	NUMCOLS = int(dimensions[1])
+
+	print 'Board size : ' + str(NUMROWS) + 'x' + str(NUMCOLS)
 	print 'Piece Codes:'
 	print '\tE = One-sided end piece'
 	print '\tC = Two-sided corner piece'
@@ -20,22 +26,22 @@ def main():
 
 	# left edge pieces
 	j = 0
-	for i in xrange(SIZE):
+	for i in xrange(NUMROWS):
 		run_elimination(i, j)
 
 	# right edge pieces
-	j = SIZE-1
-	for i in xrange(SIZE):
+	j = NUMCOLS-1
+	for i in xrange(NUMROWS):
 		run_elimination(i, j)
 
 	# top edge pieces
 	i = 0
-	for j in xrange(SIZE):
+	for j in xrange(NUMCOLS):
 		run_elimination(i, j)
 
 	# bottom edge pieces
-	i = SIZE-1
-	for j in xrange(SIZE):
+	i = NUMROWS-1
+	for j in xrange(NUMCOLS):
 		run_elimination(i, j)
 
 	# keep looping through pieces and eliminating orientations
@@ -45,9 +51,9 @@ def main():
 
 	# print out final orientations
 	print 'Final Orientations:'
-	for i in xrange(SIZE):
+	for i in xrange(NUMROWS):
 		s = ''
-		for j in xrange(SIZE):
+		for j in xrange(NUMCOLS):
 			s += ('\t' + board[i][j].orientation.get_name())
 		print s
 
@@ -114,7 +120,7 @@ def get_left_piece(i, j):
 	return board[i][j-1]
 
 def get_right_piece(i, j):
-	if j == SIZE-1:
+	if j == NUMCOLS-1:
 		return None
 	return board[i][j+1]
 
@@ -124,25 +130,25 @@ def get_above_piece(i, j):
 	return board[i-1][j]
 
 def get_below_piece(i, j):
-	if i == SIZE-1:
+	if i == NUMROWS-1:
 		return None
 	return board[i+1][j]
 
 def set_up_board():
 	global board
-	board = [[None for i in xrange(SIZE)] for j in xrange(SIZE)]
+	board = [[None for j in xrange(NUMCOLS)] for i in xrange(NUMROWS)]
 
 	code = raw_input("Enter pieces for the board: ")
 	code = code.replace(' ', '').lower()
 
-	if (len(code) < SIZE**2):
+	if (len(code) < NUMROWS * NUMCOLS):
 		print 'ERROR: Not enough pieces on the board! Exiting...\n'
 		exit()	
 
 	# set up board
-	for i in xrange(SIZE):
-		for j in xrange(SIZE):
-			piece_code = code[SIZE*i+j]
+	for i in xrange(NUMROWS):
+		for j in xrange(NUMCOLS):
+			piece_code = code[NUMCOLS*i+j]
 			if piece_code == 'e':
 				board[i][j] = EndPiece()
 			elif piece_code == 'c':
