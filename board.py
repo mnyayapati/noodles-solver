@@ -2,18 +2,14 @@ from piece import *
 
 class Board(object):
 
-	def set_up(self):
-		print 'Board size : ' + str(self.num_rows) + 'x' + str(self.num_cols)
-		self.print_piece_codes()
-
-		self.board = [[None for j in xrange(self.num_cols)] for i in xrange(self.num_rows)]
-
-		code = raw_input("Enter pieces for the board: ")
+	def set_up(self, code):
 		code = code.replace(' ', '').lower()
 
 		if (len(code) < self.num_rows * self.num_cols):
 			print 'ERROR: Not enough pieces on the board! Exiting...\n'
 			exit()	
+
+		self.board = [[None for j in xrange(self.num_cols)] for i in xrange(self.num_rows)]
 
 		# set up board
 		for i in xrange(self.num_rows):
