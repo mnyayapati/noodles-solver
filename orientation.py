@@ -1,14 +1,15 @@
 class Orientation(object):
-	def __init__(self, *args):
-		self.directions = []
-		for arg in args:
-			self.directions.append(arg)
+	def __init__(self, args):
+		self.directions = set(args)
 
 	def get_name(self):
 		return ''.join([d.get_name() for d in self.directions])
 
 	def contains_direction(self, direction):
 		return direction in self.directions
+
+	def equals(self, other):
+		return self.directions == other.directions
 
 class Direction(object):
 	pass

@@ -63,10 +63,10 @@ class CornerPiece(Piece):
 		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possible_orientations.append(Orientation(down, right))
-		self.possible_orientations.append(Orientation(down, left))
-		self.possible_orientations.append(Orientation(up, right))
-		self.possible_orientations.append(Orientation(up, left))
+		self.possible_orientations.append(Orientation([down, right]))
+		self.possible_orientations.append(Orientation([down, left]))
+		self.possible_orientations.append(Orientation([up, right]))
+		self.possible_orientations.append(Orientation([up, left]))
 
 
 class LongPiece(Piece):
@@ -74,8 +74,8 @@ class LongPiece(Piece):
 		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possible_orientations.append(Orientation(up, down))
-		self.possible_orientations.append(Orientation(left, right))
+		self.possible_orientations.append(Orientation([up, down]))
+		self.possible_orientations.append(Orientation([left, right]))
 
 
 class EndPiece(Piece):
@@ -83,10 +83,10 @@ class EndPiece(Piece):
 		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possible_orientations.append(Orientation(up))
-		self.possible_orientations.append(Orientation(down))
-		self.possible_orientations.append(Orientation(left))
-		self.possible_orientations.append(Orientation(right))
+		self.possible_orientations.append(Orientation([up]))
+		self.possible_orientations.append(Orientation([down]))
+		self.possible_orientations.append(Orientation([left]))
+		self.possible_orientations.append(Orientation([right]))
 
 
 class ProngPiece(Piece):
@@ -94,8 +94,8 @@ class ProngPiece(Piece):
 		self.possible_orientations = []
 		self.done = False
 		self.orientation = None
-		self.possible_orientations.append(Orientation(left, up, right))
-		self.possible_orientations.append(Orientation(up, right, down))
-		self.possible_orientations.append(Orientation(right, down, left))
-		self.possible_orientations.append(Orientation(down, left, up))
+		self.possible_orientations.append(Orientation([left, up, right]))
+		self.possible_orientations.append(Orientation([up, right, down]))
+		self.possible_orientations.append(Orientation([right, down, left]))
+		self.possible_orientations.append(Orientation([down, left, up]))
 

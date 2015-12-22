@@ -69,7 +69,10 @@ class Board(object):
 		for i in xrange(self.num_rows):
 			s = ''
 			for j in xrange(self.num_cols):
-				s += ('\t' + self.board[i][j].orientation.get_name())
+				if self.board[i][j].orientation == None:
+					s += '\t0'
+				else:
+					s += ('\t' + self.board[i][j].orientation.get_name())
 			print s
 		print ''
 
