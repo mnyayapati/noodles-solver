@@ -76,6 +76,16 @@ class Board(object):
 			print s
 		print ''
 
+	def get_above_piece(self, i, j):
+		if i == 0:
+			return None
+		return self.board[i-1][j]
+
+	def get_below_piece(self, i, j):
+		if i == self.num_rows-1:
+			return None
+		return self.board[i+1][j]
+
 
 class RectangleBoard(Board):
 	def __init__(self, rows, cols):
@@ -152,22 +162,140 @@ class RectangleBoard(Board):
 			return None
 		return self.board[i][j+1]
 
-	def get_above_piece(self, i, j):
-		if i == 0:
-			return None
-		return self.board[i-1][j]
-
-	def get_below_piece(self, i, j):
-		if i == self.num_rows-1:
-			return None
-		return self.board[i+1][j]
 
 class HexagonBoard(Board):
-	pass
+	def __init__(self, rows, cols):
+		self.num_rows = rows
+		self.num_cols = cols
+		self.not_done = []
 
-	# need to implement the following:
-	# 	print_piece_codes
-	# 	process_piece_code
-	# 	elimiate_orientations
+	def print_piece_codes(self):
+		print 'Piece Codes:'
+		print '\tE = One-sided end piece'
+		print '\tV = Two-sided V-shaped piece'
+		print '\tL = Two-sided long piece'
+		print '\tC = Two-sided C-shaped piece'
+		print '\tT = Three-sided triangle piece'
+		print '\tY = Three-sided Y-shaped piece'
+		print '\tW = Three-sided W-shaped piece'
+		print '\tX = Four-sided X-shaped piece'
+		print '\tK = Four-sided K-shaped piece'
+		print '\tB = Four-sided brush piece'
+
+	def process_piece_code(self, code):
+		if code == 'e':
+			return HexEndPiece()
+		elif code == 'v':
+			return VPiece()
+		elif code == 'l':
+			return HexLongPiece()
+		elif code == 'c':
+			return CPiece()
+		elif code == 't':
+			return TrianglePiece()
+		elif code == 'y':
+			return YPiece()
+		elif code == 'w':
+			return WPiece()
+		elif code == 'x':
+			return XPiece()
+		elif code == 'k':
+			return KPiece()
+		elif code == 'b':
+			return BrushPiece()
+
+	def eliminate_orientations(self, i, j):
+		piece = self.board[i][j]
+
+		# get all neighbors for this piece
+		up = self.get_above_piece(i, j)
+		down = self.get_below_piece(i, j)
+		up_right = self.get_top_right_piece(i, j)
+		down_right = self.get_bottom_right_piece(i, j)
+		up_left = self.get_top_left_piece(i, j)
+		down_left = self.get_bottom_left_piece(i ,j)
+
+		if up == None:
+			piece.eliminate_up()
+		elif up.done:
+			if up.contains_down() : piece.eliminate_not_up()
+			else : piece.eliminate_up()
+		elif type(piece) == HexEndPiece and type(up) == HexEndPiece:
+			piece.eliminate_up()
+
+		if down == None:
+			piece.eliminate_down()
+		elif down.done:
+			if down.contains_up() : piece.eliminate_not_down()
+			else : piece.eliminate_down()
+		elif type(piece) == HexEndPiece and type(down) == HexEndPiece:
+			piece.eliminate_down()
+
+		if up_right == None:
+			piece.eliminate_up_right()
+		elif up_right.done:
+			if up_right.contains_down_left() : piece.eliminate_not_up_right()
+			else : piece.eliminate_up_right()
+		elif type(piece) == HexEndPiece and type(up_right) == HexEndPiece:
+			piece.eliminate_up_right()
 
 
+		if down_right == None:
+			piece.eliminate_down_right()
+		elif down_right.done:
+			if down_right.contains_up_left() : piece.eliminate_not_down_right()
+			else : piece.eliminate_down_right()
+		elif type(piece) == HexEndPiece and type(down_right) == HexEndPiece:
+			piece.eliminate_down_right()
+
+
+		if up_left == None:
+			piece.eliminate_up_left()
+		elif up_left.done:
+			if up_left.contains_down_right() : piece.eliminate_not_up_left()
+			else : piece.eliminate_up_left()
+		elif type(piece) == HexEndPiece and type(up_left) == HexEndPiece:
+			piece.eliminate_up_left()
+
+
+		if down_left == None:
+			piece.eliminate_down_left()
+		elif down_left.done:
+			if down_left.contains_up_right() : piece.eliminate_not_down_left()
+			else : piece.eliminate_down_left()
+		elif type(piece) == HexEndPiece and type(down_left) == HexEndPiece:
+			piece.eliminate_down_left()
+
+
+
+	def get_top_right_piece(self, i, j):
+		if j == self.num_cols-1:
+			return None
+		elif j % 2 == 0:
+			return self.board[i][j+1]
+		if i == 0 : return None
+		return self.board[i-1][j+1]
+
+	def get_bottom_right_piece(self, i, j):
+		if j == self.num_cols-1:
+			return None
+		elif j % 2 == 0:
+			if i == self.num_rows-1 : return None
+			return self.board[i+1][j+1]
+		return self.board[i][j+1]
+
+	def get_top_left_piece(self, i, j):
+		if j == 0:
+			return None
+		elif j % 2 == 0:
+			return self.board[i][j-1]
+		if i == 0 : return None
+		return self.board[i-1][j-1]
+
+	def get_bottom_left_piece(self, i, j):
+		if j == 0:
+			return None
+		elif j % 2 == 0:
+			if i == self.num_rows-1 : return None
+			return self.board[i+1][j-1]
+		return self.board[i][j-1]

@@ -6,11 +6,20 @@ notDone = []
 def main():
 	print '\n~~~~~~~~~~~~~~~~~ NOODLES GAME SOLVER ~~~~~~~~~~~~~~~~~'
 
+	# Prompr user for board type
+	board_type = raw_input('Enter board type (r for rectangle, h for hexagon): ')
+
 	# Prompt user for board dimensions
 	dimensions = raw_input('Enter board dimensions ([rows] [cols]): ')
 	dimensions = dimensions.split()
 
-	board = RectangleBoard(int(dimensions[0]), int(dimensions[1]))
+	if board_type.lower() == 'r':
+		board = RectangleBoard(int(dimensions[0]), int(dimensions[1]))
+	elif board_type.lower() == 'h':
+		board = HexagonBoard(int(dimensions[0]), int(dimensions[1]))
+	else:
+		print 'Not a valid board type! Exiting...'
+		exit()
 	
 	board.print_piece_codes()
 	

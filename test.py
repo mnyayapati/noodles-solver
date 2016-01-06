@@ -2,11 +2,14 @@ from board import *
 
 # Board Types:
 # 0 for Rectangle Board
+# 1 for Hexagon Board
 
 
 def run_test(board_type, rows, cols, board_code, orientations):
 	if board_type == 0:
 		board = RectangleBoard(rows, cols)
+	elif board_type == 1:
+		board = HexagonBoard(rows, cols)
 
 	board.set_up(board_code)
 	board.run_solver()
@@ -63,8 +66,17 @@ def main():
 	run_test(0, 5, 5, 'ELPEEECPLCEPPLELPECECPLPE', orientations)
 
 	# TEST 6: 3x3 hexagon
+	orientations = [[down_right], [down_right], [up_left, down], [down, down_right],
+					[up_left, down_right], [up_left, up, down], [up],
+					[up_left, down_right], [up_left, up]]
+	orientations = [Orientation(x) for x in orientations]
+	run_test(1, 3, 3, 'EEVCLYELC', orientations)
 
 	# TEST 7: 4x3 hexagon
+	orientations = [[down], [down], [down_left], [down_right, up, down, up_right],
+					[up, down_left, up_right, down_left], [up, down],
+					[down_right, up_left, up_right], [up_left, down, down_left],
+					[up], [up_right], [up]]
 
 	# TEST 8: 4x5 hexagon
 

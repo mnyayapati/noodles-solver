@@ -3,7 +3,7 @@ class Orientation(object):
 		self.directions = set(args)
 
 	def get_name(self):
-		return ''.join([d.get_name() for d in self.directions])
+		return ','.join([d.get_name() for d in self.directions])
 
 	def contains_direction(self, direction):
 		return direction in self.directions
@@ -29,3 +29,19 @@ class Up(Direction):
 class Down(Direction):
 	def get_name(self):
 		return 'D'
+
+class UpRight(Direction):
+	def get_name(self):
+		return 'UR'
+
+class DownRight(Direction):
+	def get_name(self):
+		return 'DR'
+
+class UpLeft(Direction):
+	def get_name(self):
+		return 'UL'
+
+class DownLeft(Direction):
+	def get_name(self):
+		return 'DL'
